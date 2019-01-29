@@ -6,19 +6,25 @@ public class LevelManager : MonoBehaviour {
     // to point to the one and only LevelManager object in the Scene. This variable can then be used by any script that
     // needs to to access the one and only LevelManager object by going LevelManager.instance.
     public static LevelManager instance;
+    [TooltipAttribute("RigibBody of the Vase")]
 
-	// Okay, what objects does the LevelManager need to be connected to. I'll start you off
+    [TooltipAttribute("The force to apply to the Vase")]
+    public Vector2 forceToApply;
+    public Rigidbody2D vaseRB;
+    
+    // Okay, what objects does the LevelManager need to be connected to. I'll start you off
     // and say the LevelManager needs to be connected to the SwitchController script on the
     // Switch game object so that it can call the turnOn() and turnOff() functions on it when
     // the user presses the spacebar AND the switch is enabled (which is done by moving the
     // Hero beside the Switch).
 
-	// The SwitchController
-	public SwitchController theSwitch;
+    // The SwitchController
+    public SwitchController theSwitch;
 
     private void Awake()
     {
         instance = this;
+        initialPositionOfVase = vaseRB.gameObject.transform.position;
     }
     // Use this for initialization
     void Start () {
@@ -35,7 +41,10 @@ public class LevelManager : MonoBehaviour {
     // goes into this function that will (a) if the switch is enabled will turn it on if it is off and
     // push the Vase off the ledge and (b) if the switch is enabled will turn it off if it is on.
 	public void flipTheSwitch() {
-		
+        
+        {
+            
+        }
 	}
 
     // The following two functions get called by the SwitchController object when the Hero enters the 
