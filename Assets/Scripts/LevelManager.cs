@@ -6,12 +6,10 @@ public class LevelManager : MonoBehaviour {
     // to point to the one and only LevelManager object in the Scene. This variable can then be used by any script that
     // needs to to access the one and only LevelManager object by going LevelManager.instance.
     public static LevelManager instance;
-    [TooltipAttribute("RigibBody of the Vase")]
-
-    [TooltipAttribute("The force to apply to the Vase")]
-    public Vector2 forceToApply;
-    public Rigidbody2D vaseRB;
-    
+    public bool On = false;
+    public bool CanFlip = false;
+    public float force;
+    public Rigidbody2D Vase;
     // Okay, what objects does the LevelManager need to be connected to. I'll start you off
     // and say the LevelManager needs to be connected to the SwitchController script on the
     // Switch game object so that it can call the turnOn() and turnOff() functions on it when
@@ -24,7 +22,7 @@ public class LevelManager : MonoBehaviour {
     private void Awake()
     {
         instance = this;
-        initialPositionOfVase = vaseRB.gameObject.transform.position;
+       
     }
     // Use this for initialization
     void Start () {
@@ -43,19 +41,42 @@ public class LevelManager : MonoBehaviour {
 	public void flipTheSwitch() {
         
         {
+            if (Input.GetKeyDown("space") && CanFlip == true)
+            {
+                theSwitch.turnOn();
+                On = true;
+                Vase.AddForce(Vector2.right * force);
+            }
+
+            else if (Input.GetKeyDown("space")&& CanFlip == true && On == true)
+            {
+                theSwitch.turnOff();
+                On = false;
+            }
+            
+            
             
         }
 	}
 
     // The following two functions get called by the SwitchController object when the Hero enters the 
     // trigger box of the Switch. You need to write the code that goes into these functions.
+  
     public void onSwitchTriggerEnter(Collider2D other)
     {
+        if (other.gameObject.tag == "Player")
+        {
+            CanFlip = true;
+        }
 
     }
-
     public void onSwitchTriggerExit(Collider2D other)
     {
-        
+        if (other.gameObject.tag == "Player")
+        {
+            CanFlip = false;
+            theSwitch.turnOff();
+        }
+
     }
 }
